@@ -9,10 +9,10 @@ int main()
 	std::wcin.getline(ipAddress, 16);
 
 	std::thread ClientThread(clientSide::MessageSendHandler, ipAddress);
-	//std::thread ServerThread(serverSide::MessageListenHandler);
+	std::thread ServerThread(serverSide::MessageListenHandler);
 
 	ClientThread.join();
-	//ServerThread.join();
+	ServerThread.join();
 
 	return 0;
 }
