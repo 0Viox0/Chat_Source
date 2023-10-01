@@ -3,7 +3,11 @@
 
 int main()
 {
-	std::cout << "something" << std::endl;
+	std::thread ClientThread(clientSide::MessageSendHandler);
+	std::thread ServerThread(serverSide::MessageListenHandler);
+
+	ClientThread.join();
+	ServerThread.join();
 
 	return 0;
 }

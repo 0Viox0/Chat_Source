@@ -19,6 +19,12 @@
     <Filter Include="Source Files\ThreadImplementation">
       <UniqueIdentifier>{e4d44afc-9393-476c-8636-131a6aea559e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\AdditionalIncludes">
+      <UniqueIdentifier>{d6dca2a4-401e-423a-be07-675a09a4027f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\GeneralInclueHeader">
+      <UniqueIdentifier>{ad877fb8-b56b-4096-b3e8-bb823a1cd1c8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client-SideThread.cpp">
@@ -32,20 +38,20 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="stdafx.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="targetver.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Includes.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Client-SideThread.h">
       <Filter>Header Files\ThreadFunctions</Filter>
     </ClInclude>
     <ClInclude Include="Serve-SideThread.h">
       <Filter>Header Files\ThreadFunctions</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>Header Files\AdditionalIncludes</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>Header Files\AdditionalIncludes</Filter>
+    </ClInclude>
+    <ClInclude Include="Includes.h">
+      <Filter>Header Files\GeneralInclueHeader</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
