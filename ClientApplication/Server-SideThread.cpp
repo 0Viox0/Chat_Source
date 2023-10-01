@@ -123,6 +123,15 @@ void serverSide::MessageListenHandler()
         std::cout << ".\n.\n.\nConnection accepted!\n";
     }
 
+    ////////////////////// recieving information
 
+    while (true)
+    {
+        char buffer[200];
 
+        recv(acceptSocket, buffer, 200, 0);
+
+        std::cout << "server-reciever: " << buffer << '\n';
+    }
+    
 }

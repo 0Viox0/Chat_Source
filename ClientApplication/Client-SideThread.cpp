@@ -28,7 +28,6 @@ void clientSide::MessageSendHandler(TCHAR ipAddress[])
 	sockaddr_in socketInfo;
 	socketInfo.sin_family = AF_INET;
 	InetPton(AF_INET, ipAddress, &socketInfo.sin_addr.s_addr);
-	//InetPton(AF_INET, _T("192.168.0.177"), &socketInfo.sin_addr.s_addr);
 	socketInfo.sin_port = htons(connectPort);
 
 	std::cout << "\ntrying to connect to the server..";
@@ -41,4 +40,18 @@ void clientSide::MessageSendHandler(TCHAR ipAddress[])
 	}
 
 	std::cout << "\n.\nconnected to the server!\n";
+
+
+	////////////////////// sending information
+
+	while (true)
+	{
+		std::cout << "write a message: ";
+		char buffer[200];
+		std::cin.getline(buffer, 200);
+
+		send(clientSocket, buffer, 200, 0);
+		//send(clientSocket, str.c_str(), sizeof(str), 0);
+	}
+
 }
