@@ -1,6 +1,11 @@
 #include "Client-SideThread.h"
 
-void clientSide::MessageSendHandler(TCHAR ipAddress[], std::mutex& m)
+void clientSide::MessageSendHandler(
+	TCHAR ipAddress[], 
+	std::mutex& m, 
+	std::condition_variable& cond, 
+	bool& canWrite
+)
 {
 	SOCKET clientSocket;
 
@@ -37,24 +42,28 @@ void clientSide::MessageSendHandler(TCHAR ipAddress[], std::mutex& m)
 		return;
 	}
 
-	m.lock();
-	std::cout << "\nYOU: ";
+
+	//std::cout << "YOU: ";
 	setColor(Green, Black);
-	std::cout << "CONNECTED TO THE SERVER";
+	std::cout << "CONNECTED TO THE USER\n";
 	setColor(White, Black);
-	m.unlock();
+
+	std::unique_lock<std::mutex> locker(m);
+
+	cond.wait(locker, [&canWrite]() {return canWrite; });
 
 	////////////////////// sending information
 
 	while (true)
 	{
 		setColor(LightBlue, Black);
-		std::cout << "\nYOU: ";
+		std::cout << "YOU: ";
 		setColor(White, Black);
 		char buffer[200];
 		std::cin.getline(buffer, 200);
 
-		send(clientSocket, buffer, 200, 0);
+		if (buffer[0] != '\r')
+			send(clientSocket, buffer, 200, 0);
 	}
 
 }
