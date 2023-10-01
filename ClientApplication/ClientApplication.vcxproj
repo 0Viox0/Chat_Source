@@ -131,11 +131,13 @@
     <ClCompile Include="Client-SideThread.cpp" />
     <ClCompile Include="Main thread.cpp" />
     <ClCompile Include="Server-SideThread.cpp" />
+    <ClCompile Include="SetColorFile.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client-SideThread.h" />
     <ClInclude Include="Includes.h" />
     <ClInclude Include="Serve-SideThread.h" />
+    <ClInclude Include="SetColorFile.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
