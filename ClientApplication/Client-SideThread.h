@@ -8,8 +8,10 @@
 namespace clientSide
 {
 	void MessageSendHandler(
-		TCHAR ipAddress[], 
+		TCHAR ipAddress[],
 		std::mutex&, 
 		std::condition_variable&,
-		bool& canWrite);
+		bool& canWrite,
+		currentPosition& pos
+	);
 }

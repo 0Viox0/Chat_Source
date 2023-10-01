@@ -67,7 +67,8 @@ void GetIpAddress(TCHAR ipAddress[], int bufferSize)
 void serverSide::MessageListenHandler(
     std::mutex& m, 
     std::condition_variable& cond,
-    bool& canWrite
+    bool& canWrite,
+    currentPosition& pos
 )
 {
 	SOCKET serverSocket, acceptSocket;
@@ -143,10 +144,18 @@ void serverSide::MessageListenHandler(
 
         recv(acceptSocket, buffer, 200, 0);
 
+        GotoXY(pos.x, pos.y);
+
         setColor(LightMagenta, Black);
         std::cout << "\nOTHER-USER: ";
         setColor(White, Black);
         std::cout << buffer;
+
+        setColor(LightBlue, Black);
+        std::cout << "\nYOU: ";
+        setColor(White, Black);
+
+        pos.y++;
     }
     
 }

@@ -10,6 +10,7 @@ namespace serverSide
 	void MessageListenHandler(
 		std::mutex&, 
 		std::condition_variable&,
-		bool& canWrite
+		bool& canWrite,
+		currentPosition& cur
 	);
 }

@@ -4,7 +4,8 @@ void clientSide::MessageSendHandler(
 	TCHAR ipAddress[], 
 	std::mutex& m, 
 	std::condition_variable& cond, 
-	bool& canWrite
+	bool& canWrite,
+	currentPosition& pos
 )
 {
 	SOCKET clientSocket;
@@ -64,6 +65,8 @@ void clientSide::MessageSendHandler(
 
 		if (buffer[0] != '\r')
 			send(clientSocket, buffer, 200, 0);
+
+		pos.y++;
 	}
 
 }
