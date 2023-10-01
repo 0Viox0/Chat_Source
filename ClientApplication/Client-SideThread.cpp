@@ -5,7 +5,8 @@ void clientSide::MessageSendHandler(
 	std::mutex& m, 
 	std::condition_variable& cond, 
 	bool& canWrite,
-	currentPosition& pos
+	currentPosition& pos,
+	bool& escapeApp
 )
 {
 	SOCKET clientSocket;
@@ -55,36 +56,36 @@ void clientSide::MessageSendHandler(
 
 	////////////////////// sending information
 
-	while (true)
+	while (!escapeApp)
 	{
 		setColor(LightBlue, Black);
 		std::cout << "YOU: ";
 		setColor(White, Black);
+
 		char buffer[200];
 		std::cin.getline(buffer, 200);
 
-		if (buffer[0] != '\r')
-			send(clientSocket, buffer, 200, 0);
+		char exitCheck[] = "--escAll";
+		if (buffer[0] == exitCheck[0])
+		{
+			bool isSame = true;
+			for (int i = 0; i < 9; i++)
+			{
+				if (buffer[i] != exitCheck[i])
+				{
+					isSame = false;
+					break;
+				}
+			}
+
+			if (isSame)
+				escapeApp = true;
+		}
+
+		send(clientSocket, buffer, 200, 0);
 
 		pos.y++;
 	}
 
+	WSACleanup();
 }
-
-
-
-////////////////////// TO DO
-/*
-	BETTER INTERFACE :  NOTIFICATIONS ABOUT CONECCTIONS		  :	GREEN
-					NOTIFICATIONS ABOUT WAITING FOR CONNECTION: RED
-
-			SHOULD LOOK LIKE THIS:
-
-			OTHER-USER: "MESSAGE"
-			YOU: "MESSAGE"
-
-			OTHER-USER: CONNECTION FROM OTHER-USER ACCEPTED
-			YOU: CONNECTED TO THE OTHER-USER
-	
-
-*/

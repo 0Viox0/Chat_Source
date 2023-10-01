@@ -8,7 +8,8 @@ int main()
 	setColor(Brown, Black);
 	std::cout << "* You have to enter other's user's ip adress"
 		<< "\n* Other user has to enter it too"
-		<< "\n* Nothing will happen if other user doesn't enter your ip ";
+		<< "\n* Nothing will happen if other user doesn't enter your ip"
+		<< "\n* Type '--escAll' to exit the app";
 	setColor(Red, Black);
 	std::cout << "\n\nEnter other user's ip adress here: ";
 	setColor(White, Black);
@@ -19,14 +20,15 @@ int main()
 	std::condition_variable cond;
 
 	bool canWrite = false;
+	bool escapeApp = false;
 
-	currentPosition pos = { 0, 6 };
-
+	currentPosition pos = { 0, 7 };
 	std::thread ServerThread( serverSide::MessageListenHandler, 
 		std::ref(m), 
 		std::ref(cond), 
 		std::ref(canWrite),
-		std::ref(pos)
+		std::ref(pos),
+		std::ref(escapeApp)
 	);
 
 	std::thread ClientThread(clientSide::MessageSendHandler, 
@@ -34,12 +36,16 @@ int main()
 		std::ref(m), 
 		std::ref(cond), 
 		std::ref(canWrite),
-		std::ref(pos)
+		std::ref(pos),
+		std::ref(escapeApp)
 	);
-
 
 	ClientThread.join();
 	ServerThread.join();
+
+	setColor(Red, Black);
+	std::cout << "\n disconnected from the user";
+	setColor(White, Black);
 
 	return 0;
 }

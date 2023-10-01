@@ -68,7 +68,8 @@ void serverSide::MessageListenHandler(
     std::mutex& m, 
     std::condition_variable& cond,
     bool& canWrite,
-    currentPosition& pos
+    currentPosition& pos,
+    bool& escapeApp
 )
 {
 	SOCKET serverSocket, acceptSocket;
@@ -138,7 +139,7 @@ void serverSide::MessageListenHandler(
     ////////////////////// recieving information
 
     
-    while (true)
+    while (!escapeApp)
     {
         char buffer[200];
 
@@ -155,7 +156,25 @@ void serverSide::MessageListenHandler(
         std::cout << "\nYOU: ";
         setColor(White, Black);
 
+        char exitCheck[] = "--escAll";
+        if (buffer[0] == exitCheck[0])
+        {
+            bool isSame = true;
+            for (int i = 0; i < 9; i++)
+            {
+                if (buffer[i] != exitCheck[i])
+                {
+                    isSame = false;
+                    break;
+                }
+            }
+
+            if (isSame)
+                escapeApp = true;
+        }
+
         pos.y++;
     }
     
+    WSACleanup();
 }

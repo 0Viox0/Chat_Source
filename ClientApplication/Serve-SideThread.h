@@ -11,6 +11,7 @@ namespace serverSide
 		std::mutex&, 
 		std::condition_variable&,
 		bool& canWrite,
-		currentPosition& cur
+		currentPosition& cur,
+		bool&
 	);
 }

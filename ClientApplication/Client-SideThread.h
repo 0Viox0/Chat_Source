@@ -12,6 +12,7 @@ namespace clientSide
 		std::mutex&, 
 		std::condition_variable&,
 		bool& canWrite,
-		currentPosition& pos
+		currentPosition& pos,
+		bool&
 	);
 }
