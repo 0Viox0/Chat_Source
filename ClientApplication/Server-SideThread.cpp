@@ -64,7 +64,11 @@ void GetIpAddress(TCHAR ipAddress[], int bufferSize)
     WSACleanup();
 }
 
-void serverSide::MessageListenHandler(std::mutex& m)
+void serverSide::MessageListenHandler(
+    std::mutex& m, 
+    std::condition_variable& cond,
+    bool& canWrite
+)
 {
 	SOCKET serverSocket, acceptSocket;
 
@@ -120,16 +124,19 @@ void serverSide::MessageListenHandler(std::mutex& m)
     }
     else
     {
-        m.lock();
-        std::cout << "\nOTHER-USER: ";
+        //std::cout << "\nOTHER-USER: ";
         setColor(Green, Black);
-        std::cout << "\nCONNECTION ACCEPTED!";
+        std::cout << "CONNECTION ACCEPTED\n";
         setColor(White, Black);
-        m.unlock();
+
+        canWrite = true;
     }
+    
+    cond.notify_one();
 
     ////////////////////// recieving information
 
+    
     while (true)
     {
         char buffer[200];
