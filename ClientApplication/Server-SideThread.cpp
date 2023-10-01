@@ -64,7 +64,7 @@ void GetIpAddress(TCHAR ipAddress[], int bufferSize)
     WSACleanup();
 }
 
-void serverSide::MessageListenHandler()
+void serverSide::MessageListenHandler(std::mutex& m)
 {
 	SOCKET serverSocket, acceptSocket;
 
@@ -112,15 +112,20 @@ void serverSide::MessageListenHandler()
 
 	acceptSocket = accept(serverSocket, NULL, NULL);
 
-	if (acceptSocket == INVALID_SOCKET)
-	{
-		std::cout << "accept() in Server-SideThread failed";
-		WSACleanup();
-		return;
-	}
+    if (acceptSocket == INVALID_SOCKET)
+    {
+        std::cout << "accept() in Server-SideThread failed";
+        WSACleanup();
+        return;
+    }
     else
     {
-        std::cout << ".\n.\n.\nConnection accepted!\n";
+        m.lock();
+        std::cout << "\nOTHER-USER: ";
+        setColor(Green, Black);
+        std::cout << "\nCONNECTION ACCEPTED!";
+        setColor(White, Black);
+        m.unlock();
     }
 
     ////////////////////// recieving information
@@ -131,7 +136,10 @@ void serverSide::MessageListenHandler()
 
         recv(acceptSocket, buffer, 200, 0);
 
-        std::cout << "server-reciever: " << buffer << '\n';
+        setColor(LightMagenta, Black);
+        std::cout << "\nOTHER-USER: ";
+        setColor(White, Black);
+        std::cout << buffer;
     }
     
 }

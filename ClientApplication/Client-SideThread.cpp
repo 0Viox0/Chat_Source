@@ -1,6 +1,6 @@
 #include "Client-SideThread.h"
 
-void clientSide::MessageSendHandler(TCHAR ipAddress[])
+void clientSide::MessageSendHandler(TCHAR ipAddress[], std::mutex& m)
 {
 	SOCKET clientSocket;
 
@@ -30,8 +30,6 @@ void clientSide::MessageSendHandler(TCHAR ipAddress[])
 	InetPton(AF_INET, ipAddress, &socketInfo.sin_addr.s_addr);
 	socketInfo.sin_port = htons(connectPort);
 
-	std::cout << "\ntrying to connect to the server..";
-
 	if (connect(clientSocket, (SOCKADDR*)&socketInfo, sizeof(socketInfo)) == SOCKET_ERROR)
 	{
 		std::cout << "connect() in Client-SideTHread failedS";
@@ -39,19 +37,42 @@ void clientSide::MessageSendHandler(TCHAR ipAddress[])
 		return;
 	}
 
-	std::cout << "\n.\nconnected to the server!\n";
-
+	m.lock();
+	std::cout << "\nYOU: ";
+	setColor(Green, Black);
+	std::cout << "CONNECTED TO THE SERVER";
+	setColor(White, Black);
+	m.unlock();
 
 	////////////////////// sending information
 
 	while (true)
 	{
-		std::cout << "write a message: ";
+		setColor(LightBlue, Black);
+		std::cout << "\nYOU: ";
+		setColor(White, Black);
 		char buffer[200];
 		std::cin.getline(buffer, 200);
 
 		send(clientSocket, buffer, 200, 0);
-		//send(clientSocket, str.c_str(), sizeof(str), 0);
 	}
 
 }
+
+
+
+////////////////////// TO DO
+/*
+	BETTER INTERFACE :  NOTIFICATIONS ABOUT CONECCTIONS		  :	GREEN
+					NOTIFICATIONS ABOUT WAITING FOR CONNECTION: RED
+
+			SHOULD LOOK LIKE THIS:
+
+			OTHER-USER: "MESSAGE"
+			YOU: "MESSAGE"
+
+			OTHER-USER: CONNECTION FROM OTHER-USER ACCEPTED
+			YOU: CONNECTED TO THE OTHER-USER
+	
+
+*/

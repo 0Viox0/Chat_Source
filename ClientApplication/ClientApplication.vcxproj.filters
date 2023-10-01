@@ -25,6 +25,9 @@
     <Filter Include="Header Files\GeneralInclueHeader">
       <UniqueIdentifier>{ad877fb8-b56b-4096-b3e8-bb823a1cd1c8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\OtherSourceFIles">
+      <UniqueIdentifier>{c3a85c98-8eaf-4336-922d-8cddf5349a56}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client-SideThread.cpp">
@@ -35,6 +38,9 @@
     </ClCompile>
     <ClCompile Include="Main thread.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SetColorFile.cpp">
+      <Filter>Source Files\OtherSourceFIles</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -52,6 +58,9 @@
     </ClInclude>
     <ClInclude Include="Includes.h">
       <Filter>Header Files\GeneralInclueHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="SetColorFile.h">
+      <Filter>Header Files\AdditionalIncludes</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
