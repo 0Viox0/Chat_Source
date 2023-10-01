@@ -9,7 +9,7 @@ int main()
 	std::cout << "* You have to enter other's user's ip adress"
 		<< "\n* Other user has to enter it too"
 		<< "\n* Nothing will happen if other user doesn't enter your ip"
-		<< "\n* Type '--escAll' to exit the app";
+		<< "\n* Type '--escAll' to exit the app (other user has to press Enter to confirm)";
 	setColor(Red, Black);
 	std::cout << "\n\nEnter other user's ip adress here: ";
 	setColor(White, Black);
@@ -44,7 +44,7 @@ int main()
 	ServerThread.join();
 
 	setColor(Red, Black);
-	std::cout << "\n disconnected from the user";
+	std::cout << "\ndisconnected from the user";
 	setColor(White, Black);
 
 	return 0;
